@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lofi Music Player</title>
+  <style>
+    body {
+      background-image: url('https://wallpaperaccess.com/full/2471393.gif');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      color: #fff;
+      margin: 0;
+      padding: 0;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .player {
+      background-color: rgba(0, 0, 0, 0.7);
+      padding: 20px;
+      border-radius: 10px;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .controls button {
+      background-color: #fff;
+      color: #000;
+      border: none;
+      padding: 10px 20px;
+      margin: 0 5px;
+      cursor: pointer;
+    }
+
+    #audioPlayer {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="player">
+    <div class="controls">
+      <button id="prevBtn">Prev</button>
+      <button id="playBtn">Play</button>
+      <button id="nextBtn">Next</button>
+    </div>
+    <audio id="audioPlayer" src="" controls></audio>
+  </div>
+
+  <script>
+    const audioPlayer = document.getElementById('audioPlayer');
+    const playBtn = document.getElementById('playBtn');
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+
+    // Array of music tracks
+    const musicTracks = [
+      {
+        title: 'Track 1',
+        artist: 'Artist 1',
+        src: 'lofi+.mp3'
+      },
+      {
+        title: 'Track 2',
+        artist: 'Artist 2',
+        src: 'track2.mp3'
+      },
+      // Add more tracks as needed
+    ];
+
+    let currentTrackIndex = 0;
+
+    // Function to load and play a track
+    function loadTrack(trackIndex) {
+      audioPlayer.src = musicTracks[trackIndex].src;
+      audioPlayer.load();
+      audioPlayer.play();
+    }
+
+    // Function to handle play/pause
+    function togglePlayPause() {
+      if (audioPlayer.paused) {
+        audioPlayer.play();
+        playBtn.textContent = 'Pause';
+      } else {
+        audioPlayer.pause();
+        playBtn.textContent = 'Play';
+      }
+    }
+
+    // Function to handle previous track
+    function prevTrack() {
+      currentTrackIndex = (currentTrackIndex - 1 + musicTracks.length) % musicTracks.length;
+      loadTrack(currentTrackIndex);
+    }
+
+    // Function to handle next track
+    function nextTrack() {
+      currentTrackIndex = (currentTrackIndex + 1) % musicTracks.length;
+      loadTrack(currentTrackIndex);
+    }
+
+    // Event listeners
+    playBtn.addEventListener('click', togglePlayPause);
+    prevBtn.addEventListener('click', prevTrack);
+    nextBtn.addEventListener('click', nextTrack);
+
+    // Load the first track
+    loadTrack(currentTrackIndex);
+  </script>
+</body>
+</html>
